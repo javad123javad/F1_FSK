@@ -29,16 +29,16 @@ uint16_t sel_freq(uint8_t i_bit, uint8_t i_pos)
   switch (i_pos)
   {
     case(0):
-            iFreq = (i_bit == 0) ? 4999 : 3599;
+            iFreq = (i_bit == 0) ? 561 : 449;
     break;
     case(1):
-            iFreq = (i_bit == 0) ? 2999 : 2499;
+            iFreq = (i_bit == 0) ? 374 : 320;
     break;
     case(2):
-            iFreq = (i_bit == 0) ? 2399 : 1999;
+            iFreq = (i_bit == 0) ? 280 : 249;
     break;
     case(3):
-            iFreq = (i_bit == 0) ? 1799 : 1499;
+            iFreq = (i_bit == 0) ? 224 : 203;
     break;
 
   }
@@ -48,19 +48,19 @@ int gen_fsk(TIM_TypeDef * i_TIM,const uint16_t* i_codeByte, const size_t i_len)
 {
 
   // GEN STX
-  i_TIM->PSC = 399;
-  HAL_Delay(1);
+  i_TIM->ARR = 124;
+  HAL_Delay(20);
   // GEN MSG
   for (int i = 0; i < i_len; i++)
     {
-      i_TIM->PSC = i_codeByte[i];
-      HAL_Delay(1);
+      i_TIM->ARR = i_codeByte[i];
+      HAL_Delay(20);
 
 
     }
   //GEN ETX
-  i_TIM->PSC = 359;
-  HAL_Delay(1);
+  i_TIM->ARR = 111;
+  HAL_Delay(20);
   return 0;
 }
 int send_msg(const uint8_t* i_msg, const uint8_t i_len)
@@ -81,7 +81,7 @@ int send_msg(const uint8_t* i_msg, const uint8_t i_len)
 
       memset(codeByte,0,sizeof(codeByte));
     }
-  TIM2->PSC = 319;
-  HAL_Delay(1);
+  TIM2->ARR = 99;
+  HAL_Delay(20);
   return 0;
 }
